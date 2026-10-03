@@ -1,0 +1,15 @@
+{
+  "name": "Flight",
+  "description": "Let's you fly.",
+  "icon": "minecraft:cooked_beef",
+
+  "type": "nyxum:active_command",
+  "command": "give @s minecraft:cooked_beef 64",
+  "keybind": "key.nyxum.ability_1",
+
+  "conditions": {
+    "nyxum:is_submerged": {
+      "fluid": "minecraft:water"
+    }
+  }
+}

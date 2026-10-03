@@ -1,0 +1,8 @@
+{
+  "name": "Final War Power",
+  "description": "Super awesome power.",
+  "icon": "minecraft:cooked_beef",
+  "abilities": [
+    "final-war:flight"
+  ]
+}
