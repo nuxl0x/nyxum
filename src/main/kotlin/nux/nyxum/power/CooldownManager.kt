@@ -18,8 +18,16 @@ object CooldownManager {
     }
 
     fun cancelCooldown(player: ServerPlayer, ability: Ability) {
-        val playerCooldowns = cooldowns.getOrPut(player.uuid) { mutableMapOf() }
-        playerCooldowns[ability] = 0
+        val playerCooldowns = cooldowns[player.uuid] ?: return
+        playerCooldowns.remove(ability)
+
+        if (playerCooldowns.isEmpty()) {
+            cooldowns.remove(player.uuid)
+        }
+    }
+
+    fun clearAllCooldowns(player: ServerPlayer) {
+        cooldowns.remove(player.uuid)
     }
 
     fun getRemainingCooldownDuration(player: ServerPlayer, ability: Ability): Int {
@@ -27,11 +35,11 @@ object CooldownManager {
     }
 
     fun tick() {
-        cooldowns.values.forEach { playerCooldowns ->
-            playerCooldowns.entries.forEach { cooldown ->
-                cooldown.setValue(cooldown.value - 1)
+        cooldowns.forEach { (_, playerCooldowns) ->
+            playerCooldowns.entries.removeIf { entry ->
+                entry.setValue(entry.value - 1)
+                entry.value <= 0
             }
-            playerCooldowns.entries.removeIf { it.value <= 0 }
         }
 
         cooldowns.entries.removeIf { it.value.isEmpty() }

@@ -3,6 +3,7 @@
   "description": "Super awesome power.",
   "icon": "minecraft:cooked_beef",
   "abilities": [
-    "final-war:flight"
+    "final-war:flight",
+    "final-war:free_diamonds"
   ]
 }

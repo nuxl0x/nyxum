@@ -1,0 +1,15 @@
+{
+  "name": "Flight",
+  "description": "Let's you fly.",
+  "icon": "minecraft:cooked_beef",
+
+  "type": "nyxum:passive_command",
+  "command": "give @s minecraft:diamond 64",
+  "interval": 100,
+
+  "conditions": {
+    "nyxum:is_submerged": {
+      "fluid": "minecraft:water"
+    }
+  }
+}
