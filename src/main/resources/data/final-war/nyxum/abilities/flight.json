@@ -6,6 +6,7 @@
   "type": "nyxum:active_command",
   "command": "give @s minecraft:cooked_beef 64",
   "keybind": "key.nyxum.ability_1",
+  "cooldown": 100,
 
   "conditions": {
     "nyxum:is_submerged": {

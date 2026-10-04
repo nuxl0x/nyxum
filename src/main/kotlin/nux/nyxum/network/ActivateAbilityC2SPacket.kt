@@ -2,8 +2,9 @@ package nux.nyxum.network
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import nux.nyxum.NyxumAPI
-import nux.nyxum.ability.ActiveAbilityType
+import nux.nyxum.ability.ActiveAbilityParams
 import nux.nyxum.power.Ability
+import nux.nyxum.power.CooldownManager
 import nux.nyxum.registry.AbilityRegistry
 import nux.nyxum.registry.ConditionRegistry
 
@@ -19,22 +20,25 @@ object ActivateAbilityC2SPacket {
 
                 val toTrigger = mutableListOf<Ability>()
                 abilities.forEach { ability ->
-                    if (ability.type is ActiveAbilityType && ability.type.keybind == keybindKey) {
+                    if (ability.params is ActiveAbilityParams && ability.params.keybind == keybindKey) {
                         toTrigger.add(ability)
                     }
                 }
 
                 toTrigger.forEach { ability ->
-                    val shouldExecuteAbility = ability.conditions.all { (id, condition) ->
+                    val conditionsMet = ability.conditions.all { (id, condition) ->
                         val registryCondition = ConditionRegistry.fromId(id)
                         registryCondition.evaluate(condition, server, player)
                     }
 
+                    if (!conditionsMet) return@forEach
 
-                    if (!shouldExecuteAbility) return@forEach
+                    if (CooldownManager.isOnCooldown(player, ability)) return@forEach
+
+                    CooldownManager.startCooldown(player, ability)
 
                     val registryAbility = AbilityRegistry.fromId(ability.typeId)
-                    registryAbility.abilityAction.invoke(ability.type, server, player)
+                    registryAbility.abilityAction.invoke(ability.params, server, player)
                 }
 
             }

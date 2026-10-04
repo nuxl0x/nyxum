@@ -3,8 +3,8 @@ package nux.nyxum.power
 import com.google.gson.annotations.SerializedName
 import net.minecraft.resources.ResourceLocation
 import nux.nyxum.Nyxum.asId
-import nux.nyxum.ability.AbilityType
-import nux.nyxum.condition.ConditionType
+import nux.nyxum.ability.AbilityParams
+import nux.nyxum.condition.ConditionParams
 
 data class Ability(
     val name: String = "",
@@ -13,7 +13,7 @@ data class Ability(
     @SerializedName("type")
     val typeId: ResourceLocation = "nothing".asId(),
 
-    val conditions: Map<ResourceLocation, ConditionType> = mapOf(),
+    val conditions: Map<ResourceLocation, ConditionParams> = mapOf(),
 
-    val type: AbilityType
+    val params: AbilityParams
 )

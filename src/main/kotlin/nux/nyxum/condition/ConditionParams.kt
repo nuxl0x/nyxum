@@ -1,5 +1,5 @@
 package nux.nyxum.condition
 
-sealed interface ConditionType {
+sealed interface ConditionParams {
     val inverted: Boolean get() = false
 }

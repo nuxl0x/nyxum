@@ -4,14 +4,14 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.Nyxum.asId
-import nux.nyxum.ability.AbilityType
+import nux.nyxum.ability.AbilityParams
 import nux.nyxum.ability.ActiveCommand
 import nux.nyxum.ability.Nothing
 
 enum class AbilityRegistry(
     val id: ResourceLocation,
-    val type: Class<out AbilityType>,
-    val abilityAction: (AbilityType, MinecraftServer, ServerPlayer) -> Unit
+    val type: Class<out AbilityParams>,
+    val abilityAction: (AbilityParams, MinecraftServer, ServerPlayer) -> Unit
 ) {
     NOTHING("nothing".asId(), Nothing::class.java, { _, _, _ -> }),
     COMMAND("active_command".asId(), ActiveCommand::class.java, { commandType, server, player ->

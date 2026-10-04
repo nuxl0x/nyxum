@@ -1,0 +1,39 @@
+package nux.nyxum.power
+
+import net.minecraft.server.level.ServerPlayer
+import nux.nyxum.ability.ActiveAbilityParams
+import java.util.UUID
+
+object CooldownManager {
+    private val cooldowns = mutableMapOf<UUID, MutableMap<Ability, Int>>()
+
+    fun isOnCooldown(player: ServerPlayer, ability: Ability): Boolean {
+        return (cooldowns[player.uuid]?.get(ability) ?: 0) > 0
+    }
+
+    fun startCooldown(player: ServerPlayer, ability: Ability) {
+        val playerCooldowns = cooldowns.getOrPut(player.uuid) { mutableMapOf() }
+        val abilityParams = ability.params as? ActiveAbilityParams ?: return
+        playerCooldowns[ability] = abilityParams.cooldown
+    }
+
+    fun cancelCooldown(player: ServerPlayer, ability: Ability) {
+        val playerCooldowns = cooldowns.getOrPut(player.uuid) { mutableMapOf() }
+        playerCooldowns[ability] = 0
+    }
+
+    fun getRemainingCooldownDuration(player: ServerPlayer, ability: Ability): Int {
+        return cooldowns[player.uuid]?.get(ability)?.coerceAtLeast(0) ?: 0
+    }
+
+    fun tick() {
+        cooldowns.values.forEach { playerCooldowns ->
+            playerCooldowns.entries.forEach { cooldown ->
+                cooldown.setValue(cooldown.value - 1)
+            }
+            playerCooldowns.entries.removeIf { it.value <= 0 }
+        }
+
+        cooldowns.entries.removeIf { it.value.isEmpty() }
+    }
+}

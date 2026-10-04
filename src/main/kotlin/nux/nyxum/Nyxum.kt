@@ -2,11 +2,13 @@ package nux.nyxum
 
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.registry.CommandRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
 import nux.nyxum.network.ActivateAbilityC2SPacket
+import nux.nyxum.power.CooldownManager
 import nux.nyxum.power.NyxumAbilityLoader
 import nux.nyxum.power.NyxumPowerLoader
 import nux.nyxum.registry.DataRegistry
@@ -29,6 +31,10 @@ object Nyxum : ModInitializer {
 
 		CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
 			NyxumCommands.init(dispatcher)
+		}
+
+		ServerTickEvents.END_SERVER_TICK.register { _ ->
+			CooldownManager.tick()
 		}
 	}
 
