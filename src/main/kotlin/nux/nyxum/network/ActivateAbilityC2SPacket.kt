@@ -4,8 +4,10 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import nux.nyxum.Nyxum.asId
 import nux.nyxum.NyxumAPI
 import nux.nyxum.condition.KeyPressed
-import nux.nyxum.power.Ability
-import nux.nyxum.power.CooldownManager
+import nux.nyxum.ability.Ability
+import nux.nyxum.ability.AbilityStatus
+import nux.nyxum.ability.AbilityStatusManager
+import nux.nyxum.ability.CooldownManager
 import nux.nyxum.registry.AbilityRegistry
 
 object ActivateAbilityC2SPacket {

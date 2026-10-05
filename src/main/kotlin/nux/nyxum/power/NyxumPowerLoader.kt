@@ -9,6 +9,7 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
 import net.minecraft.util.profiling.ProfilerFiller
 import nux.nyxum.Nyxum.asId
+import nux.nyxum.ability.NyxumAbilityLoader
 import nux.nyxum.registry.DataRegistry
 import org.slf4j.LoggerFactory
 

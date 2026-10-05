@@ -2,6 +2,7 @@ package nux.nyxum.power
 
 import com.google.gson.annotations.SerializedName
 import net.minecraft.resources.ResourceLocation
+import nux.nyxum.ability.Ability
 
 data class Power(
     val name: String = "",

@@ -5,17 +5,17 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
-import net.fabricmc.fabric.api.registry.CommandRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.PackType
+import nux.nyxum.ability.AbilityStatusManager
 import nux.nyxum.network.ActivateAbilityC2SPacket
-import nux.nyxum.power.CooldownManager
-import nux.nyxum.power.NyxumAbilityLoader
+import nux.nyxum.ability.CooldownManager
+import nux.nyxum.ability.NyxumAbilityLoader
 import nux.nyxum.power.NyxumPowerLoader
-import nux.nyxum.power.PassiveManager
+import nux.nyxum.ability.PassiveManager
 import nux.nyxum.power.PlayerFlagManager
-import nux.nyxum.power.TickingPassiveManager
+import nux.nyxum.ability.TickingPassiveManager
 import nux.nyxum.registry.DataRegistry
 import nux.nyxum.registry.PlayerPowerDataRegistry
 import org.slf4j.LoggerFactory
@@ -54,6 +54,7 @@ object Nyxum : ModInitializer {
 			TickingPassiveManager.removeTickingPassives(player)
 			CooldownManager.clearAllCooldowns(player)
 			PlayerFlagManager.clearFlags(player)
+			AbilityStatusManager.clearAbilityStatuses(player)
 		}
 
 		ServerPlayerEvents.AFTER_RESPAWN.register { _, newPlayer, _ ->

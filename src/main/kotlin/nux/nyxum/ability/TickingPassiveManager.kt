@@ -1,4 +1,4 @@
-package nux.nyxum.power
+package nux.nyxum.ability
 
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
@@ -7,6 +7,7 @@ import nux.nyxum.NyxumAPI
 import nux.nyxum.condition.Interval
 import nux.nyxum.registry.AbilityRegistry
 import java.util.UUID
+import kotlin.collections.forEach
 
 object TickingPassiveManager {
 

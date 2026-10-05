@@ -1,7 +1,7 @@
 package nux.nyxum.registry
 
 import net.minecraft.resources.ResourceLocation
-import nux.nyxum.power.Ability
+import nux.nyxum.ability.Ability
 import nux.nyxum.power.Power
 
 object DataRegistry {

@@ -2,10 +2,10 @@ package nux.nyxum
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
-import nux.nyxum.power.CooldownManager
+import nux.nyxum.ability.CooldownManager
 import nux.nyxum.power.Power
 import nux.nyxum.power.PowerManager
-import nux.nyxum.power.TickingPassiveManager
+import nux.nyxum.ability.TickingPassiveManager
 import nux.nyxum.registry.DataRegistry
 
 object NyxumAPI {

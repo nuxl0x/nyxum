@@ -1,11 +1,10 @@
-package nux.nyxum.power
+package nux.nyxum.ability
 
 import com.google.gson.annotations.SerializedName
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.Nyxum.asId
-import nux.nyxum.ability.AbilityParams
 import nux.nyxum.condition.ConditionParams
 import nux.nyxum.registry.ConditionRegistry
 

@@ -1,4 +1,4 @@
-package nux.nyxum.power
+package nux.nyxum.ability
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,7 +11,6 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
 import net.minecraft.util.profiling.ProfilerFiller
 import nux.nyxum.Nyxum.asId
-import nux.nyxum.ability.AbilityParams
 import nux.nyxum.condition.ConditionParams
 import nux.nyxum.registry.AbilityRegistry
 import nux.nyxum.registry.ConditionRegistry

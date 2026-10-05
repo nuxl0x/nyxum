@@ -5,8 +5,10 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.Nyxum.asId
+import nux.nyxum.ability.AbilityStatusManager
 import nux.nyxum.condition.ConditionParams
 import nux.nyxum.condition.Interval
+import nux.nyxum.condition.IsEnabled
 import nux.nyxum.condition.IsSubmerged
 import nux.nyxum.condition.KeyPressed
 import nux.nyxum.condition.None
@@ -31,6 +33,14 @@ enum class ConditionRegistry(
             return true
         }
     },
+    IS_ENABLED("is_enabled".asId(), IsEnabled::class.java) {
+        override fun evaluate(condition: ConditionParams, server: MinecraftServer, player: ServerPlayer): Boolean {
+            val isEnabled = condition as IsEnabled
+            val requestedAbility = DataRegistry.ABILITIES[isEnabled.ability] ?: return false
+            return AbilityStatusManager.isEnabled(player, requestedAbility)
+        }
+    },
+
     IS_SUBMERGED("is_submerged".asId(), IsSubmerged::class.java) {
         override fun evaluate(condition: ConditionParams, server: MinecraftServer, player: ServerPlayer): Boolean {
             val isSubmerged = condition as IsSubmerged

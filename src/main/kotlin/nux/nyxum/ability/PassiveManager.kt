@@ -1,4 +1,4 @@
-package nux.nyxum.power
+package nux.nyxum.ability
 
 import net.minecraft.server.MinecraftServer
 import nux.nyxum.Nyxum.asId
