@@ -3,7 +3,7 @@
 	"package": "nux.nyxum.client.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ExampleClientMixin"
+		"LightTextureMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

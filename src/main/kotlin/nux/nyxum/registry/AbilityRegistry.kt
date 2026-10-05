@@ -5,29 +5,31 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.Nyxum.asId
 import nux.nyxum.ability.AbilityParams
-import nux.nyxum.ability.ActiveCommand
+import nux.nyxum.ability.Command
+import nux.nyxum.ability.NightVision
 import nux.nyxum.ability.Nothing
-import nux.nyxum.ability.PassiveCommand
+import nux.nyxum.power.Ability
+import nux.nyxum.power.PlayerFlag
+import nux.nyxum.power.PlayerFlagManager
 
 enum class AbilityRegistry(
     val id: ResourceLocation,
-    val type: Class<out AbilityParams>,
-    val abilityAction: (AbilityParams, MinecraftServer, ServerPlayer) -> Unit
+    val params: Class<out AbilityParams>,
+    val abilityAction: (Ability, MinecraftServer, ServerPlayer) -> Unit
 ) {
     NOTHING("nothing".asId(), Nothing::class.java, { _, _, _ -> }),
-    ACTIVE_COMMAND("active_command".asId(), ActiveCommand::class.java, { commandType, server, player ->
-        val command = commandType as ActiveCommand
-        val commandsManager = server.commands
-        val sourceStack = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
+    COMMAND("command".asId(), Command::class.java, { commandAbility, server, player ->
+        if (commandAbility.shouldExecute(server, player)) {
+            val command = commandAbility.params as Command
+            val commandsManager = server.commands
+            val sourceStack = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
 
-        commandsManager.performPrefixedCommand(sourceStack, command.command)
+            commandsManager.performPrefixedCommand(sourceStack, command.command)
+        }
     }),
-    PASSIVE_COMMAND("passive_command".asId(), PassiveCommand::class.java, { commandType, server, player ->
-        val command = commandType as PassiveCommand
-        val commandsManager = server.commands
-        val sourceStack = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
-
-        commandsManager.performPrefixedCommand(sourceStack, command.command)
+    NIGHT_VISION("night_vision".asId(), NightVision::class.java, { nightVisionAbility, server, player ->
+        val shouldHaveNightVision = nightVisionAbility.shouldExecute(server, player)
+        PlayerFlagManager.setFlag(player, PlayerFlag.HAS_NIGHT_VISION, shouldHaveNightVision)
     });
 
     companion object {

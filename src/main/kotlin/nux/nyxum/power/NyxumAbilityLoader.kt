@@ -39,7 +39,7 @@ class NyxumAbilityLoader : SimpleJsonResourceReloadListener(GSON, "nyxum/abiliti
                     val conditionId = ResourceLocation.tryParse(idString) ?: "none".asId()
                     val matchedCondition = ConditionRegistry.fromId(conditionId)
 
-                    val paramsInstance: ConditionParams = context.deserialize(conditionJson, matchedCondition.type)
+                    val paramsInstance: ConditionParams = context.deserialize(conditionJson, matchedCondition.params)
                     resultMap[conditionId] = paramsInstance
                 }
                 resultMap
@@ -60,7 +60,7 @@ class NyxumAbilityLoader : SimpleJsonResourceReloadListener(GSON, "nyxum/abiliti
                 val typeId = ResourceLocation.tryParse(typeStr) ?: "nothing".asId()
                 val matchedAbilityType = AbilityRegistry.fromId(typeId)
 
-                val typeParams: AbilityParams = context.deserialize(json, matchedAbilityType.type)
+                val typeParams: AbilityParams = context.deserialize(json, (matchedAbilityType.params))
 
                 Ability(
                     name = name,

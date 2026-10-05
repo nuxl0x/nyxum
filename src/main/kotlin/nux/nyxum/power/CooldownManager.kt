@@ -1,7 +1,8 @@
 package nux.nyxum.power
 
 import net.minecraft.server.level.ServerPlayer
-import nux.nyxum.ability.ActiveAbilityParams
+import nux.nyxum.Nyxum.asId
+import nux.nyxum.condition.KeyPressed
 import java.util.UUID
 
 object CooldownManager {
@@ -13,8 +14,8 @@ object CooldownManager {
 
     fun startCooldown(player: ServerPlayer, ability: Ability) {
         val playerCooldowns = cooldowns.getOrPut(player.uuid) { mutableMapOf() }
-        val abilityParams = ability.params as? ActiveAbilityParams ?: return
-        playerCooldowns[ability] = abilityParams.cooldown
+        val keyPressedCondition = ability.conditions["key_pressed".asId()] as? KeyPressed ?: return
+        playerCooldowns[ability] = keyPressedCondition.cooldown
     }
 
     fun cancelCooldown(player: ServerPlayer, ability: Ability) {

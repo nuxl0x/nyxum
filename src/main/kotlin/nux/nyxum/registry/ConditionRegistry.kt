@@ -6,17 +6,29 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.Nyxum.asId
 import nux.nyxum.condition.ConditionParams
+import nux.nyxum.condition.Interval
 import nux.nyxum.condition.IsSubmerged
+import nux.nyxum.condition.KeyPressed
 import nux.nyxum.condition.None
 
 enum class ConditionRegistry(
     val id: ResourceLocation,
-    val type: Class<out ConditionParams>,
+    val params: Class<out ConditionParams>,
 ) {
     NONE("none".asId(), None::class.java) {
         override fun evaluate(condition: ConditionParams, server: MinecraftServer, player: ServerPlayer): Boolean {
             val none = condition as None
             return false.handleInvert(none.inverted)
+        }
+    },
+    KEY_PRESSED("key_pressed".asId(), KeyPressed::class.java) {
+        override fun evaluate(condition: ConditionParams, server: MinecraftServer, player: ServerPlayer): Boolean {
+            return true
+        }
+    },
+    INTERVAL("interval".asId(), Interval::class.java) {
+        override fun evaluate(condition: ConditionParams, server: MinecraftServer, player: ServerPlayer): Boolean {
+            return true
         }
     },
     IS_SUBMERGED("is_submerged".asId(), IsSubmerged::class.java) {

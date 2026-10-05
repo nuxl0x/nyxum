@@ -2,6 +2,7 @@ package nux.nyxum
 
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.fabricmc.fabric.api.registry.CommandRegistry
@@ -12,6 +13,8 @@ import nux.nyxum.network.ActivateAbilityC2SPacket
 import nux.nyxum.power.CooldownManager
 import nux.nyxum.power.NyxumAbilityLoader
 import nux.nyxum.power.NyxumPowerLoader
+import nux.nyxum.power.PassiveManager
+import nux.nyxum.power.PlayerFlagManager
 import nux.nyxum.power.TickingPassiveManager
 import nux.nyxum.registry.DataRegistry
 import nux.nyxum.registry.PlayerPowerDataRegistry
@@ -38,6 +41,7 @@ object Nyxum : ModInitializer {
 		ServerTickEvents.END_SERVER_TICK.register { server ->
 			CooldownManager.tick()
 			TickingPassiveManager.tick(server)
+			PassiveManager.tick(server)
 		}
 
 		ServerPlayConnectionEvents.JOIN.register { handler, _, _ ->
@@ -49,6 +53,11 @@ object Nyxum : ModInitializer {
 			val player = handler.player
 			TickingPassiveManager.removeTickingPassives(player)
 			CooldownManager.clearAllCooldowns(player)
+			PlayerFlagManager.clearFlags(player)
+		}
+
+		ServerPlayerEvents.AFTER_RESPAWN.register { _, newPlayer, _ ->
+			CooldownManager.clearAllCooldowns(newPlayer)
 		}
 	}
 

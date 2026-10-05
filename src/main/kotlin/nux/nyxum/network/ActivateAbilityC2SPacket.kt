@@ -1,12 +1,12 @@
 package nux.nyxum.network
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import nux.nyxum.Nyxum.asId
 import nux.nyxum.NyxumAPI
-import nux.nyxum.ability.ActiveAbilityParams
+import nux.nyxum.condition.KeyPressed
 import nux.nyxum.power.Ability
 import nux.nyxum.power.CooldownManager
 import nux.nyxum.registry.AbilityRegistry
-import nux.nyxum.registry.ConditionRegistry
 
 object ActivateAbilityC2SPacket {
 
@@ -20,25 +20,21 @@ object ActivateAbilityC2SPacket {
 
                 val toTrigger = mutableListOf<Ability>()
                 abilities.forEach { ability ->
-                    if (ability.params is ActiveAbilityParams && ability.params.keybind == keybindKey) {
+                    val keyPressedCondition = ability.conditions["key_pressed".asId()] as? KeyPressed ?: return@forEach
+                    if (keyPressedCondition.key == keybindKey) {
                         toTrigger.add(ability)
                     }
                 }
 
+                if (toTrigger.isEmpty()) return@execute
+
                 toTrigger.forEach { ability ->
-                    val conditionsMet = ability.conditions.all { (id, condition) ->
-                        val registryCondition = ConditionRegistry.fromId(id)
-                        registryCondition.evaluate(condition, server, player)
-                    }
-
-                    if (!conditionsMet) return@forEach
-
                     if (CooldownManager.isOnCooldown(player, ability)) return@forEach
 
                     CooldownManager.startCooldown(player, ability)
 
                     val registryAbility = AbilityRegistry.fromId(ability.typeId)
-                    registryAbility.abilityAction.invoke(ability.params, server, player)
+                    registryAbility.abilityAction.invoke(ability, server, player)
                 }
 
             }

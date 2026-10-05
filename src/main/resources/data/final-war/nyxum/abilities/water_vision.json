@@ -1,0 +1,13 @@
+{
+  "name": "Water Vision",
+  "description": "see under the sea",
+  "icon": "minecraft:cooked_beef",
+
+  "type": "nyxum:night_vision",
+
+  "conditions": {
+    "nyxum:is_submerged": {
+      "fluid": "minecraft:water"
+    }
+  }
+}

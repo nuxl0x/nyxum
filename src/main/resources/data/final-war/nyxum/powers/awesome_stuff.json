@@ -4,6 +4,7 @@
   "icon": "minecraft:cooked_beef",
   "abilities": [
     "final-war:flight",
-    "final-war:free_diamonds"
+    "final-war:free_diamonds",
+    "final-war:water_vision"
   ]
 }
