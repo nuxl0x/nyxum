@@ -16,6 +16,7 @@ import nux.nyxum.power.NyxumPowerLoader
 import nux.nyxum.ability.PassiveManager
 import nux.nyxum.power.PlayerFlagManager
 import nux.nyxum.ability.TickingPassiveManager
+import nux.nyxum.power.PowerSync.syncPower
 import nux.nyxum.registry.DataRegistry
 import nux.nyxum.registry.PlayerPowerDataRegistry
 import org.slf4j.LoggerFactory
@@ -47,11 +48,14 @@ object Nyxum : ModInitializer {
 		ServerPlayConnectionEvents.JOIN.register { handler, _, _ ->
 			val player = handler.player
 			TickingPassiveManager.addTickingPassives(player)
+			PassiveManager.addPassives(player)
+			player.syncPower()
 		}
 
 		ServerPlayConnectionEvents.DISCONNECT.register { handler, _ ->
 			val player = handler.player
 			TickingPassiveManager.removeTickingPassives(player)
+			PassiveManager.removePassives(player)
 			CooldownManager.clearAllCooldowns(player)
 			PlayerFlagManager.clearFlags(player)
 			AbilityStatusManager.clearAbilityStatuses(player)
@@ -59,6 +63,7 @@ object Nyxum : ModInitializer {
 
 		ServerPlayerEvents.AFTER_RESPAWN.register { _, newPlayer, _ ->
 			CooldownManager.clearAllCooldowns(newPlayer)
+			newPlayer.syncPower()
 		}
 	}
 

@@ -7,7 +7,8 @@ data class Resource(
     val minValue: Int = 0,
     @SerializedName("max_value")
     val maxValue: Int = 100,
-    var value: Int = maxValue,
+    @SerializedName("start_value")
+    var value: Int = minValue,
     @SerializedName("should_render")
     val shouldRender: Boolean = false
 )

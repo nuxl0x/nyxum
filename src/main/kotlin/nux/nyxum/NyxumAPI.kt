@@ -3,9 +3,11 @@ package nux.nyxum
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import nux.nyxum.ability.CooldownManager
+import nux.nyxum.ability.PassiveManager
 import nux.nyxum.power.Power
 import nux.nyxum.power.PowerManager
 import nux.nyxum.ability.TickingPassiveManager
+import nux.nyxum.power.PowerSync.syncPower
 import nux.nyxum.registry.DataRegistry
 
 object NyxumAPI {
@@ -21,10 +23,13 @@ object NyxumAPI {
 
     fun setPower(player: ServerPlayer, powerId: ResourceLocation) {
         TickingPassiveManager.removeTickingPassives(player)
+        PassiveManager.removePassives(player)
         CooldownManager.clearAllCooldowns(player)
 
         PowerManager.setPower(player, powerId)
         TickingPassiveManager.addTickingPassives(player)
+        PassiveManager.addPassives(player)
+        player.syncPower()
     }
 
     /**
@@ -35,6 +40,7 @@ object NyxumAPI {
         TickingPassiveManager.removeTickingPassives(player)
         CooldownManager.clearAllCooldowns(player)
         PowerManager.clearPower(player)
+        player.syncPower()
         return true
     }
 

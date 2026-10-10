@@ -36,7 +36,7 @@ object ActivateAbilityC2SPacket {
                     CooldownManager.startCooldown(player, ability)
 
                     val registryAbility = AbilityRegistry.fromId(ability.typeId)
-                    registryAbility.abilityAction.invoke(ability, server, player)
+                    registryAbility.execute(ability, player, server)
                 }
 
             }

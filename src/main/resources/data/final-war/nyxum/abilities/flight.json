@@ -1,7 +1,7 @@
 {
   "name": "Flight",
   "description": "Let's you fly.",
-  "icon": "minecraft:cooked_beef",
+  "icon": "minecraft:diamond",
 
   "type": "nyxum:command",
   "command": "give @s minecraft:cooked_beef 64",

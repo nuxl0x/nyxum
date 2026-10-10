@@ -57,6 +57,38 @@ object NyxumKeybinds {
                     ClientPlayNetworking.send(Packets.ACTIVATE_ABILITY_C2S, buf)
                 }
             }
+
+            while (ABILITY_2.consumeClick()) {
+                client.player?.let { _ ->
+                    val buf = PacketByteBufs.create()
+                    buf.writeInt(2)
+                    ClientPlayNetworking.send(Packets.ACTIVATE_ABILITY_C2S, buf)
+                }
+            }
+
+            while (ABILITY_3.consumeClick()) {
+                client.player?.let { _ ->
+                    val buf = PacketByteBufs.create()
+                    buf.writeInt(3)
+                    ClientPlayNetworking.send(Packets.ACTIVATE_ABILITY_C2S, buf)
+                }
+            }
+
+            while (ABILITY_4.consumeClick()) {
+                client.player?.let { _ ->
+                    val buf = PacketByteBufs.create()
+                    buf.writeInt(4)
+                    ClientPlayNetworking.send(Packets.ACTIVATE_ABILITY_C2S, buf)
+                }
+            }
+
+            while (ABILITY_5.consumeClick()) {
+                client.player?.let { _ ->
+                    val buf = PacketByteBufs.create()
+                    buf.writeInt(5)
+                    ClientPlayNetworking.send(Packets.ACTIVATE_ABILITY_C2S, buf)
+                }
+            }
         }
     }
 }

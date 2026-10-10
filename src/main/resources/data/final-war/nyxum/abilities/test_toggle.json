@@ -1,0 +1,13 @@
+{
+  "name": "toggle toggle",
+  "description": "will it work?",
+  "icon": "minecraft:emerald",
+
+  "type": "nyxum:toggle",
+
+  "conditions": {
+    "nyxum:key_pressed": {
+      "key": "key.nyxum.ability_2"
+    }
+  }
+}

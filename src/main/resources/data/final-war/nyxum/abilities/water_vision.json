@@ -1,13 +1,13 @@
 {
   "name": "Water Vision",
   "description": "see under the sea",
-  "icon": "minecraft:cooked_beef",
+  "icon": "minecraft:emerald",
 
   "type": "nyxum:night_vision",
 
   "conditions": {
-    "nyxum:is_submerged": {
-      "fluid": "minecraft:water"
+    "nyxum:is_enabled": {
+      "ability": "final-war:test_toggle"
     }
   }
 }

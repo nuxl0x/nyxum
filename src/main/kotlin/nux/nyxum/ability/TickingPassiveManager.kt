@@ -44,7 +44,7 @@ object TickingPassiveManager {
                     newRemaining = condition.interval
 
                     val registryAbility = AbilityRegistry.fromId(ability.typeId)
-                    registryAbility.abilityAction.invoke(ability, server, player)
+                    registryAbility.execute(ability, player, server)
                 }
                 entry.setValue(newRemaining)
             }
